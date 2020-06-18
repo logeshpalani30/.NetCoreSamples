@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPIDemo", "WebAPIDemo\WebAPIDemo.csproj", "{EE6924D8-18D0-4645-8FFB-FFCE1A6F89B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPIDemo", "WebAPIDemo\WebAPIDemo.csproj", "{EE6924D8-18D0-4645-8FFB-FFCE1A6F89B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUDwithASPdotNetCore", "..\..\..\..\source\repos\CRUD\CRUDwithASPdotNetCore\CRUDwithASPdotNetCore.csproj", "{C5B079F3-2B06-4C44-A69F-9C534D54F418}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{EE6924D8-18D0-4645-8FFB-FFCE1A6F89B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE6924D8-18D0-4645-8FFB-FFCE1A6F89B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE6924D8-18D0-4645-8FFB-FFCE1A6F89B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5B079F3-2B06-4C44-A69F-9C534D54F418}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5B079F3-2B06-4C44-A69F-9C534D54F418}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5B079F3-2B06-4C44-A69F-9C534D54F418}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5B079F3-2B06-4C44-A69F-9C534D54F418}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
