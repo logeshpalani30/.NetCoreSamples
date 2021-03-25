@@ -28,6 +28,8 @@ namespace UserDataFlow
 
             services.AddTransient<IUser, UserRepository>();
 
+            services.AddTransient<IRoles, RolesRepository>();
+
             services.AddTransient<IAddress, AddressRepository>();
 
             services.AddTransient<IContactNumber, ContactNumberRepository>();

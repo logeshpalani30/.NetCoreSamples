@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Net;
 using Microsoft.AspNetCore.Http;
 using UserDataFlow.Interface;
 using UserDataFlow.Model.Contact;
@@ -31,7 +32,7 @@ namespace UserDataFlow.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new StatusCodeResult(StatusCodes.Status404NotFound);
+                return BadRequest(e.Message);
             }
         }
 
@@ -40,11 +41,15 @@ namespace UserDataFlow.Controllers
         {
             try
             {
+                Response.StatusCode = StatusCodes.Status200OK;
+
                 var contactModel = _contactNumber.AddContact(contact);
                 return new OkObjectResult(contactModel);
             }
             catch (Exception e)
             {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+
                 _logger.LogError(e.Message);
                 return BadRequest(e.Message);
             }
@@ -62,7 +67,7 @@ namespace UserDataFlow.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e.Message);
-                return new StatusCodeResult(StatusCodes.Status404NotFound);
+                return BadRequest(e.Message);
             }
         }
         
@@ -77,7 +82,7 @@ namespace UserDataFlow.Controllers
             catch (Exception e)
             {
                _logger.LogError(e.Message);
-               return new StatusCodeResult(StatusCodes.Status404NotFound);
+               return BadRequest(e.Message);
             }
         }
     }

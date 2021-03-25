@@ -7,16 +7,12 @@ namespace UserDataFlow.Interface
 {
     public interface IUser
     {
-        int AddUser(UserModel user);
-        
-        bool DeleteUser(int id);
-        
-        bool UpdateUser(int id, UserModel userModel);
-
-        User GetUser(int id);
-
-        List<dynamic> GetUsers();
-
-        LoginResultModel Login(LoginModel user);
+        AddressAndContact AddUser(UserSignup user);
+        void DeleteUser(int id);
+        UserDetail UpdateUser(UserDetail userModel);
+        UserDetail GetUser(int id);
+        IEnumerable<UserDetail> GetUsers();
+        UserDetail Login(LoginReq user);
+        void ResetPassword(LoginReq req);
     }
 }

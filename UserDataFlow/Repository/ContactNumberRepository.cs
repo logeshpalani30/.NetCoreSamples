@@ -16,24 +16,31 @@ namespace UserDataFlow.Repository
         {
             _dbContext = dbContext;
         }
-        public ContactNumberModel AddContact(AddContactModel contactModel)
+        public ContactNumberModel AddContact(AddContactModel req)
         {
-            var userContact = new UserContact()
+            if (_dbContext.UserContact.Any(c => c.UserId == req.UserId))
             {
-                UserId = contactModel.UserId,
-                Number = contactModel.Number,
-                NumberType = contactModel.NumberType
-            };
+                if (!string.IsNullOrEmpty(req.Number.Trim())&&!string.IsNullOrEmpty(req.NumberType.Trim()))
+                {
+                    var userContact = new UserContact()
+                    {
+                        UserId = req.UserId,
+                        Number = req.Number,
+                        NumberType = req.NumberType
+                    };
 
-            var contact = _dbContext.UserContact.Add(userContact);
-            _dbContext.SaveChanges();
-           
-            if (contact!=null)
-            {
-                return GetReturnableObject(contact.Entity);
+                    var contact = _dbContext.UserContact.Add(userContact);
+                    _dbContext.SaveChanges();
+
+                    if (contact != null)
+                    {
+                        return GetReturnableObject(contact.Entity);
+                    }
+                }
+                throw new Exception("Mobile number and number type should not be empty");
             }
 
-            throw new ArgumentException("Internal Server app");
+            throw new ArgumentException("User not exist");
         }
 
         private ContactNumberModel GetReturnableObject(UserContact contact)
@@ -52,14 +59,20 @@ namespace UserDataFlow.Repository
             var contact = _dbContext.UserContact.FirstOrDefault(c =>
                 c.ContactId == userContact.ContactId && c.UserId == userContact.UserId);
 
-            if (contact!=null)
+            if (contact != null)
             {
-                contact.Number = userContact.Number;
-                contact.NumberType = userContact.NumberType;
+                if (!string.IsNullOrEmpty(userContact.Number.Trim()) &&
+                    !string.IsNullOrEmpty(userContact.NumberType.Trim()))
+                {
+                    contact.Number = userContact.Number;
+                    contact.NumberType = userContact.NumberType;
 
-                _dbContext.Update(contact);
-                _dbContext.SaveChanges();
-                return GetReturnableObject(contact);
+                    _dbContext.Update(contact);
+                    _dbContext.SaveChanges();
+                    return GetReturnableObject(contact);
+                }
+
+                throw new Exception("Mobile number and number type should not be empty");
             }
 
             throw new Exception("User not found");

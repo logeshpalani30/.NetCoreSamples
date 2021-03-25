@@ -49,35 +49,42 @@ namespace UserDataFlow.Controllers
             }
         }
 
-        // POST api/<AddressController>
         [HttpPost("addAddress")]
         public IActionResult Post([FromBody] AddressReq addressReq)
         {
             try
             {
-
-                return new OkObjectResult("");
+                var address = _address.AddAddress( addressReq);
+                return new OkObjectResult(address);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError(e.Message);
                 return new BadRequestObjectResult(e.Message);
             }
         }
 
-        // PUT api/<AddressController>/5
-        [HttpPut("updateAddress/{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<AddressController>/5
-        [HttpDelete("deleteUser/userId/{userId}/contactId/{contactId}")]
-        public IActionResult Delete(int userId,int contactId)
+        [HttpPut("updateAddress")]
+        public IActionResult Put([FromBody] AddressRes req)
         {
             try
             {
-                _address.DeleteAddress(userId, contactId);
+                var res = _address.UpdateAddress(req);
+                return new OkObjectResult(res);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return new BadRequestObjectResult(e.Message);
+            }
+        }
+
+        [HttpDelete("deleteUser/userId/{userId}/addressId/{addressId}")]
+        public IActionResult Delete(int userId,int addressId)
+        {
+            try
+            {
+                _address.DeleteAddress(userId, addressId);
                 return new OkObjectResult("Address deleted");
             }
             catch (Exception e)

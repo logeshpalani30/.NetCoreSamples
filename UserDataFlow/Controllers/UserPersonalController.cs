@@ -70,16 +70,31 @@ namespace UserDataFlow.Controllers
         /// <param name="UserModel">UserModel</param>
         /// object.
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="req"></param>
         /// <returns>User Model</returns>
 
-        [HttpPost("addUser")]
-        public IActionResult Post([FromBody] UserModel value)
+        [HttpPost("Signup")]
+        public IActionResult Post([FromBody] UserSignup req)
         {
             try
             {
-                var userId = _user.AddUser(value);
+                var userId = _user.AddUser(req);
                 return new OkObjectResult(userId);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return new BadRequestObjectResult(e.Message);
+            }
+        }
+
+        [HttpPost("resetPassword")]
+        public IActionResult Post([FromBody] LoginReq req)
+        {
+            try
+            {
+                _user.ResetPassword(req);
+                return new OkObjectResult("Password reset successfully");
             }
             catch (Exception e)
             {
@@ -91,28 +106,22 @@ namespace UserDataFlow.Controllers
         /// <summary>
         /// Update the user data, but password won't be update in this api.
         /// </summary>
-        /// <param name="id"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        [HttpPut("updateUser/{id}")]
-        public IActionResult Put(int id, [FromBody] UserModel user)
+        [HttpPut("updateUser")]
+        public IActionResult Put([FromBody] UserDetail user)
         {
             try
             {
-                var isUpdated = _user.UpdateUser(id, user);
-                if (isUpdated)
-                {
-                    return new OkObjectResult("User updated successfully added");
-                }
-
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                var updatedDetail = _user.UpdateUser( user);
+              
+                return new OkObjectResult(updatedDetail);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError(e.Message);
+                return new NotFoundObjectResult(e.Message);
             }
-
-            return new NotFoundObjectResult("User not found");
         }
 
         /// <summary>
@@ -125,20 +134,18 @@ namespace UserDataFlow.Controllers
         {
             try
             {
-                var isDeleted = _user.DeleteUser(id);
-                if (isDeleted)
-                    return new OkObjectResult("Successfully deleted");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+                _user.DeleteUser(id);
+                return new OkObjectResult("Successfully deleted");
             }
             catch (Exception e)
             {
+                _logger.LogError(e.Message);
                 return new NotFoundObjectResult(e.Message);
             }
         }
 
-        [HttpPost]
-        [Route("login")]
-        public IActionResult Login([FromBody] LoginModel user)
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginReq user)
         {
             try
             {
