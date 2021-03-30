@@ -55,6 +55,10 @@ namespace UITask.Pages
 
                 Message = response?.PrimeOrNot;
             }
+            else
+            {
+                Message = "Enter Some Number";
+            }
         }
 
         // private string AddValues()
