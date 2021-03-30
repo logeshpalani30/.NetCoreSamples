@@ -18,48 +18,46 @@ namespace UserDataFlow.Repository
 
         public List<AddressRes> GetAddress(int userId)
         {
-            var address = (from a in _dbContext.UserAddress
-                                        from b in _dbContext.BaseAddress
-                                        where b.PinCode == a.PinCode
-                                        where a.UserId == userId
+            var address = (from userAddress in _dbContext.UserAddress
+                                        from baseAddress in _dbContext.BaseAddress
+                                        where baseAddress.PinCode == userAddress.PinCode
+                                        where userAddress.UserId == userId
                                         select new AddressRes()
                                         {
-                                            UserId = a.UserId,
-                                            DoorNo = a.DoorNo,
-                                            PinCode = a.PinCode,
-                                            AddressId = a.AddressId,
-                                            City = b.City,
-                                            District = b.District,
-                                            Nationality = b.Nationality,
-                                            Street = a.Street
+                                            UserId = userAddress.UserId,
+                                            DoorNo = userAddress.DoorNo,
+                                            PinCode = userAddress.PinCode,
+                                            AddressId = userAddress.AddressId,
+                                            City = baseAddress.City,
+                                            District = baseAddress.District,
+                                            Nationality = baseAddress.Nationality,
+                                            Street = userAddress.Street
                                         }).ToList();
 
             if (address.Any())
-            {
                 return address;
-            }
 
             throw new Exception("Address not exist");
         }
 
         public AddressRes GetAddress(int userId, int addressId)
         {
-            var differAddress = _dbContext.UserAddress.FirstOrDefault(c => c.UserId == userId && c.AddressId == addressId);
+            var userAddress = _dbContext.UserAddress.FirstOrDefault(c => c.UserId == userId && c.AddressId == addressId);
 
-            if (differAddress!=null)
+            if (userAddress!=null)
             {
-                var commonAddress = _dbContext.BaseAddress.FirstOrDefault(c => c.PinCode == differAddress.PinCode);
-                if(commonAddress != null)
+                var baseAddress = _dbContext.BaseAddress.FirstOrDefault(c => c.PinCode == userAddress.PinCode);
+                if(baseAddress != null)
                     return new AddressRes()
                     {
-                        UserId = differAddress.UserId,
-                        DoorNo = differAddress.DoorNo,
-                        PinCode = differAddress.PinCode,
-                        AddressId = differAddress.AddressId,
-                        City = commonAddress.City,
-                        District = commonAddress.District,
-                        Nationality = commonAddress.Nationality,
-                        Street = differAddress.Street
+                        UserId = userAddress.UserId,
+                        DoorNo = userAddress.DoorNo,
+                        PinCode = userAddress.PinCode,
+                        AddressId = userAddress.AddressId,
+                        City = baseAddress.City,
+                        District = baseAddress.District,
+                        Nationality = baseAddress.Nationality,
+                        Street = userAddress.Street
                     };
             }
 
@@ -133,11 +131,16 @@ namespace UserDataFlow.Repository
                         if (_dbContext.UserAddress.Where(c => c.PinCode == differAddress.PinCode).ToList().Count() <= 1)
                         {
                             var baseAddress = _dbContext.BaseAddress.FirstOrDefault(c => c.PinCode == differAddress.PinCode);
-                            baseAddress.City = req.City;
-                            baseAddress.District = req.District;
-                            baseAddress.Nationality = req.Nationality;
+                            
+                            if (baseAddress != null)
+                            {
+                                baseAddress.City = req.City;
+                                baseAddress.District = req.District;
+                                baseAddress.Nationality = req.Nationality;
 
-                            _dbContext.Update(baseAddress);
+                                _dbContext.Update(baseAddress);
+                            }
+
                             _dbContext.SaveChanges();
                         }
                         else

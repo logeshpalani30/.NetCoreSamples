@@ -184,21 +184,19 @@ namespace UserDataFlow.Repository
                                 Number = contact.Number,
                                 NumberType = contact.NumberType
                             },
-                        Addresses = from a in _dbContext.UserAddress
-                            where a.UserId == u.UserId
-                            join b in _dbContext.BaseAddress on a.PinCode equals b.PinCode
+                        Addresses = from userAddress in _dbContext.UserAddress
+                            where userAddress.UserId == u.UserId
+                            join baseAddress in _dbContext.BaseAddress on userAddress.PinCode equals baseAddress.PinCode
                             select new Address()
                             {
-                                DoorNo = a.DoorNo,
-                                PinCode = a.PinCode,
-                                City = b.City,
-                                District = b.District,
-                                Nationality = b.Nationality,
-                                Street = a.Street
+                                DoorNo = userAddress.DoorNo,
+                                PinCode = userAddress.PinCode,
+                                City = baseAddress.City,
+                                District = baseAddress.District,
+                                Nationality = baseAddress.Nationality,
+                                Street = userAddress.Street
                             }
                     };
-
-                
             }
 
             throw new Exception("No Users");

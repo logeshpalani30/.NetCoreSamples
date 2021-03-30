@@ -1,0 +1,17 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="flex-fill" style="margin-top: 40px">
+    <form class="form-group" method="get">
+        <input type="text" asp-for="givenText" class="form-control" style="height: 50px" placeholder="Enter the numbers"/>
+        <input type="submit" style="margin-top: 20px; height: 50px" class="btn btn-primary"/>
+    </form>
+</div>
+<div>
+    <text>
+        @IndexModel.Message
+    </text>
+</div>
