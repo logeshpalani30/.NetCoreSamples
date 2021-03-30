@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System.Text.Json;
+using WebApi.Model;
 
 namespace WebAPIDemo.Controllers
 {
@@ -17,10 +18,12 @@ namespace WebAPIDemo.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ICheckPrimeOrNot _checkPrimeOrNot;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICheckPrimeOrNot checkPrimeOrNot)
         {
             _logger = logger;
+            _checkPrimeOrNot = checkPrimeOrNot;
         }
 
         [HttpGet]
@@ -34,6 +37,24 @@ namespace WebAPIDemo.Controllers
                 Summary = Summaries[rng.Next(Summaries.Length)]
             })
             .ToArray();
+        }
+        [HttpPost("checkPrime")]
+        public IActionResult GetPrimeOrNot([FromBody] PrimeOrNotRequest request)
+        {
+            if (!string.IsNullOrEmpty(request.number.Trim()))
+            {
+                var primeResult = _checkPrimeOrNot.CheckPrimeOrNot(request.number);
+                var result = new PrimeOrNotResponse()
+                {
+                    number = request.number,
+                    PrimeOrNot = primeResult
+                };
+
+                return new OkObjectResult(result);
+            }
+            else
+                return BadRequest("Entered Wrong Text");
+
         }
     }
 }

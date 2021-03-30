@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUDwithASPdotNetCore", "CR
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EfDbModelDemo", "EfAdoTemplateTest\EfDbModelDemo.csproj", "{EE3814E9-09FA-48E1-BD6D-46688C832308}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserDataFlow", "UserDataFlow\UserDataFlow.csproj", "{3A3F538E-2CA1-44DD-97CB-0ADC553A16C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserDataFlow", "UserDataFlow\UserDataFlow.csproj", "{3A3F538E-2CA1-44DD-97CB-0ADC553A16C9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UITask", "PrimeOrNot\UITask.csproj", "{4A2951EB-E521-4B73-8FF7-87BE7D205DE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Model", "WebApi.Model\WebApi.Model.csproj", "{CA4FEEF3-BBB7-458C-B529-722A4A243159}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{3A3F538E-2CA1-44DD-97CB-0ADC553A16C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A3F538E-2CA1-44DD-97CB-0ADC553A16C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A3F538E-2CA1-44DD-97CB-0ADC553A16C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A2951EB-E521-4B73-8FF7-87BE7D205DE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A2951EB-E521-4B73-8FF7-87BE7D205DE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A2951EB-E521-4B73-8FF7-87BE7D205DE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A2951EB-E521-4B73-8FF7-87BE7D205DE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA4FEEF3-BBB7-458C-B529-722A4A243159}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA4FEEF3-BBB7-458C-B529-722A4A243159}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA4FEEF3-BBB7-458C-B529-722A4A243159}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA4FEEF3-BBB7-458C-B529-722A4A243159}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
