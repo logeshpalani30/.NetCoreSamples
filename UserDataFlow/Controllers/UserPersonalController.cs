@@ -2,8 +2,16 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using AutoMapper;
+using ExcelDataReader;
 using UserDataFlow.Interface;
 using UserDataFlow.Model.User;
+using User = UserDataFlow.Models.User;
 
 namespace UserDataFlow.Controllers
 {
@@ -16,12 +24,33 @@ namespace UserDataFlow.Controllers
     {
         private readonly ILogger<UserPersonalController> _logger;
         private readonly IUser _user;
+        private readonly IMapper _mapper;
 
-        public UserPersonalController(ILogger<UserPersonalController> logger, IUser user)
+        public UserPersonalController(ILogger<UserPersonalController> logger, IUser user, IMapper mapper)
         {
             _logger = logger;
             _user = user;
+            _mapper = mapper;
         }
+
+        [HttpPost("addUsersFromExcel")]
+        public IActionResult AddUserFromExcel(IFormFile file)
+        {
+            try
+            {
+                if (file is null)
+                    return BadRequest();
+
+                var result = _user.AddUsersFromExcel(file);
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            }
+        }
+
 
         // GET: api/<UserController>
         /// <summary>
@@ -33,7 +62,7 @@ namespace UserDataFlow.Controllers
         {
             try
             {
-                var users = _user.GetUsers();
+                var users = _user.GetUsers().Result;
                 return new OkObjectResult(users);
             }
             catch (Exception e)
@@ -55,7 +84,7 @@ namespace UserDataFlow.Controllers
             try
             {
                 var user = _user.GetUser(id);
-                return new OkObjectResult(user);
+                return new OkObjectResult(_mapper.Map<UserDetail>(user));
             }
             catch (Exception e)
             {
@@ -72,7 +101,6 @@ namespace UserDataFlow.Controllers
         /// </summary>
         /// <param name="req"></param>
         /// <returns>User Model</returns>
-
         [HttpPost("Signup")]
         public IActionResult Post([FromBody] UserSignup req)
         {
@@ -113,8 +141,8 @@ namespace UserDataFlow.Controllers
         {
             try
             {
-                var updatedDetail = _user.UpdateUser( user);
-              
+                var updatedDetail = _user.UpdateUser(user);
+
                 return new OkObjectResult(updatedDetail);
             }
             catch (Exception e)

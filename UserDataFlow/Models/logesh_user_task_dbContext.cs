@@ -26,7 +26,7 @@ namespace UserDataFlow.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=tcp:logesh98.database.windows.net,1433;Initial Catalog=logesh_user_task_db;Persist Security Info=False;User ID=logesh;Password=Administrator@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                optionsBuilder.UseSqlServer("Server=tcp:logesh98.database.windows.net,1433;Initial Catalog=logesh_user_task_db;Persist Security Info=False;User ID=logesh;Password=;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }
         }
 

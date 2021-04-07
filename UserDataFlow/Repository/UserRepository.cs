@@ -1,11 +1,18 @@
-﻿using System;
+﻿using ExcelDataReader;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using UserDataFlow.Interface;
 using UserDataFlow.Model.Address;
 using UserDataFlow.Model.Contact;
 using UserDataFlow.Model.User;
 using UserDataFlow.Models;
+using User = UserDataFlow.Models.User;
 
 namespace UserDataFlow.Repository
 {
@@ -143,30 +150,30 @@ namespace UserDataFlow.Repository
             return addedContacts;
         }
 
-        public UserDetail GetUser(int id)
+        public User GetUser(int id)
         {
             var user =_dbContext.User.SingleOrDefault(c => c.UserId == id);
 
             return user == null
                 ? throw new Exception("User not found")
-                : new UserDetail()
-                {
-                    Email = user.Email,
-                    FirstName = user.FirstName,
-                    Gender = user.Gender,
-                    LastName = user.LastName,
-                    PhotoUrl = user.PhotoUrl,
-                    RoleId = user.RoleId??0,
-                    UserId = user.UserId,
-                    Addresses = GetAddresses(user.UserId),
-                    Contacts = GetContacts(user.UserId)
-                };
+                : user;
         }
 
-        public IEnumerable<UserDetail> GetUsers()
+        public async Task<IQueryable<UserDetail>> GetUsers()
         {
             if (_dbContext.User.Any())
             {
+                IQueryable<User> query = _dbContext.User;
+
+                foreach (var user in query)
+                {
+                    user.UserContact = _dbContext.UserContact.Where(c => c.UserId == user.UserId).ToList();
+                    user.UserAddress = _dbContext.UserAddress.Where(c => c.UserId == user.UserId).ToList();
+                }
+
+                // return await query.ToArrayAsync();
+
+
                 return from u in _dbContext.User
                     select new UserDetail()
                     {
@@ -238,6 +245,57 @@ namespace UserDataFlow.Repository
             user.Password = req.Password;
             _dbContext.User.Update(user);
             _dbContext.SaveChanges();
+        }
+
+        public string AddUsersFromExcel(IFormFile file)
+        {
+            IExcelDataReader reader = null;
+            DataSet dataSet = new DataSet();
+
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
+            var path = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+
+            reader = Path.GetExtension(path) switch
+            {
+                ".xls" => //Excel 97-03.
+                    ExcelReaderFactory.CreateBinaryReader(file.OpenReadStream()),
+                ".xlsx" => //Excel 07 and above.
+                    ExcelReaderFactory.CreateOpenXmlReader(file.OpenReadStream()),
+                _ => throw new Exception("File format wrong")
+            };
+
+            dataSet = reader.AsDataSet();
+            reader?.Close();
+
+            if (dataSet != null && dataSet.Tables.Count > 0)
+            {
+                foreach (DataTable dataTable in dataSet.Tables)
+                {
+                    for (var i = 1; i < dataTable.Rows.Count; i++)
+                    {
+                        var user = new User
+                        {
+                            FirstName = Convert.ToString(dataTable.Rows[i][0]),
+                            LastName = Convert.ToString(dataTable.Rows[i][1]),
+                            Gender = Convert.ToString(dataTable.Rows[i][2]),
+                            PhotoUrl = Convert.ToString(dataTable.Rows[i][3]),
+                            Email = Convert.ToString(dataTable.Rows[i][4]),
+                            Password = Convert.ToString(dataTable.Rows[i][5]),
+                        };
+                        _dbContext.User.Add(user);
+                    }
+                }
+            }
+            else
+                throw new Exception("Excel sheet empty");
+
+            var changes = _dbContext.SaveChanges();
+
+            if (changes>0)
+                return "Added Successfully";
+
+            throw new Exception("Internal server error");
         }
 
         public void DeleteUser(int id)

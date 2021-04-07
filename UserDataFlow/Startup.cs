@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Reflection;
 using UserDataFlow.Interface;
 using UserDataFlow.Models;
 using UserDataFlow.Repository;
@@ -31,6 +32,8 @@ namespace UserDataFlow
             services.AddTransient<IRoles, RolesRepository>();
 
             services.AddTransient<IAddress, AddressRepository>();
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddTransient<IContactNumber, ContactNumberRepository>();
 
