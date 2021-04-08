@@ -66,7 +66,7 @@ namespace UserDataFlow.Controllers
             SmtpClient smtp=null;
             try
             {
-                if (request.ToAddresses.Count==0 || !IsValidEmail(request.FromAddress.Email) && string.IsNullOrEmpty(request.FromAddress.Name) || string.IsNullOrEmpty(request.Subject.Trim()) || string.IsNullOrEmpty(request.Subject.Trim()))
+                if (request.ToAddresses.Count == 0 || !EmailValidator.IsValidEmail(request.FromAddress.Email) && string.IsNullOrEmpty(request.FromAddress.Name) || string.IsNullOrEmpty(request.Subject.Trim()) || string.IsNullOrEmpty(request.Subject.Trim()))
                     return BadRequest();
 
                 var email = new MimeMessage()
@@ -77,7 +77,7 @@ namespace UserDataFlow.Controllers
                     },
                     To =
                     {
-                        new GroupAddress("Addresses", (from address in request.ToAddresses where IsValidEmail(address.Email) && !string.IsNullOrEmpty(address.Name) select new MailboxAddress(address.Name, address.Email)).Cast<InternetAddress>().ToList())
+                        new GroupAddress("Addresses", GetToAddress(request))
                     },
                     Subject = request.Subject,
                     Body = new TextPart(request.IsHtmlBody ? TextFormat.Html : TextFormat.Text)
@@ -87,14 +87,12 @@ namespace UserDataFlow.Controllers
                 };
 
                 if (request.BccAddresses != null && request.BccAddresses.Count > 0)
-                    email.Bcc.AddRange((from address in request.BccAddresses where IsValidEmail(address.Email) && !string.IsNullOrEmpty(address.Name) select new MailboxAddress(address.Name, address.Email)).Cast<InternetAddress>().ToList());
+                    AddBccAddresses(request, email);
 
                 if (request.CcAddresses != null && request.CcAddresses.Any())
-                    email.Cc.AddRange((from address in request.CcAddresses where IsValidEmail(address.Email) && !string.IsNullOrEmpty(address.Name) select new MailboxAddress(address.Name, address.Email)).Cast<InternetAddress>().ToList());
-
-                smtp = new SmtpClient();
-                smtp.Connect("smtp.gmail.com", 587);
-                smtp.Authenticate(_configuration["SenderEmailId"], _configuration["SenderEmailPassword"]);
+                    AddCcAddresses(request, email);
+                
+                smtp = GetEmailClient();
                 smtp.Send(email);
                 return Ok("Mail send successfully");
             }
@@ -110,11 +108,28 @@ namespace UserDataFlow.Controllers
             }
         }
 
-        private static bool IsValidEmail(string email)
+        private SmtpClient GetEmailClient()
         {
-            var regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
-            var match = regex.Match(email);
-            return match.Success;
+            var smtp = new SmtpClient();
+            smtp.Connect("smtp.gmail.com", 587);
+            smtp.Authenticate(_configuration["SenderEmailId"], _configuration["SenderEmailPassword"]);
+            return smtp;
         }
+
+        private static List<InternetAddress> GetToAddress(SendEmailRequest request)
+        {
+            return (from address in request.ToAddresses where EmailValidator.IsValidEmail(address.Email) && !string.IsNullOrEmpty(address.Name) select new MailboxAddress(address.Name, address.Email)).Cast<InternetAddress>().ToList();
+        }
+
+        private static void AddCcAddresses(SendEmailRequest request, MimeMessage email)
+        {
+            email.Cc.AddRange((from address in request.CcAddresses where EmailValidator.IsValidEmail(address.Email) && !string.IsNullOrEmpty(address.Name) select new MailboxAddress(address.Name, address.Email)).Cast<InternetAddress>().ToList());
+        }
+
+        private static void AddBccAddresses(SendEmailRequest request, MimeMessage email)
+        {
+            email.Bcc.AddRange((from address in request.BccAddresses where EmailValidator.IsValidEmail(address.Email) && !string.IsNullOrEmpty(address.Name) select new MailboxAddress(address.Name, address.Email)).Cast<InternetAddress>().ToList());
+        }
+
     }
 }
