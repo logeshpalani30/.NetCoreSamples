@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "xamarinandroidtasktest",
+  "private_key_id": "179a8d5b0a737cbffc8e938be0d03e3f9104f54c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDGXiSzwpsjnW/v\n7+lNcI/h0x5kqGBqY6LB+imUqhMM+H+Oxn91bUWjdKRG2xCMpS0ojry0BdKGW5t7\nWwkmcYJyFwqyMbRH0A8fsZkN/zaCFluy2pDpxVk/i7S8pWW4MPKqNBQmJ5VBCm3h\nHhrxQB6QGj+1eBg7JDJUiWjanZXZKeCa/FdGSyERO4DskSM86bAhxuNNL6nr4Lk7\nE1Df6vP1hLlw0xJG/BbnZdgtK9gRU+jLPNeQHXaFt078dmdFRAMDmL8HoiVFW1Ub\n2dvGYxS31NyBuFwZEWHxPs4j5p6PRShOVKA5qRjO0KAUwj0GKxfzLjfWDSqmMt8Y\nJ6mQPC2TAgMBAAECggEAKHyOgSH3CA3aCt6sf2G5/B1a1rCG/S/YyD6GvhD4Um1l\nm35oBU+IJxRncw7DEfGkheKcISIPFd0cntC1zWLdfOu3Ayeh5AZTD+TvmCu+tE5b\n6OUzLoNY899PxDD90dorrRF0C1WI4P1/77J1TUgI9OBmoGMiju+UViy1eekv7GKD\nPCXexfcvro15BgiOGzuiXX0XGjF0cFcry23FpmQIR+pwT37OtiIyJVZnm4CiHFL9\n47r8KO8i2Q3m3pjM3eaS1l4Mgn0AUh9Er/J8fVIgPK+YxynJEWISK0c1QOpCQVT/\n5Xc4B2DZsXSfehwC6SASLKKvL1+TN3bA+Z0dBJEqAQKBgQD5sUs9fnvGAAe86DCY\nn7qKFrHDjzhMTrNg5d0awbLcazsCtDmtdQ+YkTO014BScqvLbxU7iCrPAE0rnzxQ\n+WCnuOodCWmXiz1HfFESe9SFZrI/eA3VkYYIYfeTX8hSMe6NENtvYvJJOCjqL/zS\nGBPifQe3H7smMeSMOWQ/153SfwKBgQDLYPGBDm7Jzxz13SaWLYicYDjdJyRn/bhx\nZKVZQPFharH6OKKdYEx897dm+QiolkqFpwJAs9POj4Fpjjp66iNXrPY7tIvKrn0o\nR4MJS4CFPAJbEjDzouQV747f+C9izZUNQor/3s/mgsh1TjJ9NHbW5w15BG4j3Dre\nzkOXnzyy7QKBgGLxwLEDmCSkCmzvTaKNWSwzRgoKjPKgFTEGpZFexHPYAjBWHqz/\nwEhi8axt4SnKywz4Xd+TW/NfWTU6CnrD92s/OXZ8Ll2hDY1wU+gRLewW//dqqYDC\nA+z6dVLvF8CKjM9VqL8A5KXjHUN/9J2EcQzFIvOMHWtLRhfS/kjWNnIdAoGARp76\nHWtKky8lCkbp0Dotdsd+12RxIt8afd2KAQ0pBD/NX2rtJKK8zKQj/lC5bfkKFZDh\nmmAXS2HPeTzXF7lX3mkD88WEyTN/6E20tbSPAzTMSJ1vfBpzAx71SNZgdfmXKUyT\nAbh4Dr4ZJ4qow4tFPOhsaDpemHsvwhBzriGwLR0CgYEAxvXZHtVMG7W02bIo36aC\nCA6Qbmnu6e88pQd9R9onbGS6SqcpGwuHY16sFLYC2Ti+hWghVfyv69Iw8IC7yOVQ\nAkA+vzNf+4zRTelmPQdG4/nWAjxQiJ2jwMXR4Ctpd5HmA6wqpolm/TGRIcupTWh3\nb0qxB38MaOdeRl4JPYvwDho=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-nakcs@xamarinandroidtasktest.iam.gserviceaccount.com",
+  "client_id": "115986458580277183289",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-nakcs%40xamarinandroidtasktest.iam.gserviceaccount.com"
+}

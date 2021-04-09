@@ -6,7 +6,7 @@ namespace WebApi.Model
     {
         public string number { get; set; }
     }
-
+    
     public class PrimeOrNotResponse:PrimeOrNotRequest
     {
         public string PrimeOrNot { get; set; }

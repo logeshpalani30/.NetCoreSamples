@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "607061559300",
+    "project_id": "xamarinandroidtasktest",
+    "storage_bucket": "xamarinandroidtasktest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607061559300:android:a51397ece87e94b4258d51",
+        "android_client_info": {
+          "package_name": "com.companyname.fcmtestapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607061559300-1sv5j11ev8bj5tp8evqme8f6hb7irjeh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1szJ8H4moLwQpdCpj28PNfzV6cp5_O6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607061559300-1sv5j11ev8bj5tp8evqme8f6hb7irjeh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

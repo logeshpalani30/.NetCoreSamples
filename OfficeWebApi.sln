@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserDataFlow", "UserDataFlo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UITask", "PrimeOrNot\UITask.csproj", "{4A2951EB-E521-4B73-8FF7-87BE7D205DE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Model", "WebApi.Model\WebApi.Model.csproj", "{CA4FEEF3-BBB7-458C-B529-722A4A243159}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.Model", "WebApi.Model\WebApi.Model.csproj", "{CA4FEEF3-BBB7-458C-B529-722A4A243159}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FcmTestApp", "FcmTestApp\FcmTestApp.csproj", "{4CD20DFC-325F-4891-AD2D-42875695E152}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,12 @@ Global
 		{CA4FEEF3-BBB7-458C-B529-722A4A243159}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA4FEEF3-BBB7-458C-B529-722A4A243159}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA4FEEF3-BBB7-458C-B529-722A4A243159}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CD20DFC-325F-4891-AD2D-42875695E152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CD20DFC-325F-4891-AD2D-42875695E152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CD20DFC-325F-4891-AD2D-42875695E152}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4CD20DFC-325F-4891-AD2D-42875695E152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CD20DFC-325F-4891-AD2D-42875695E152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CD20DFC-325F-4891-AD2D-42875695E152}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
