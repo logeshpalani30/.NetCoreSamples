@@ -1,3 +1,4 @@
+using FirebaseAdmin;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.IO;
 using System.Reflection;
+using Google.Apis.Auth.OAuth2;
 using UserDataFlow.Interface;
 using UserDataFlow.Models;
 using UserDataFlow.Repository;
@@ -60,6 +63,13 @@ namespace UserDataFlow
                     }
                 });
             });
+
+            // Building default instance
+            var defaultInstance = FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "fcm-key.json"))
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
